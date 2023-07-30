@@ -93,9 +93,11 @@
                 }
                 draggable = false;
             }
-
-            var lineBreak = document.createElement('br');
-            containers.appendChild(lineBreak);
+            
+            for (var k = 1; k <= 2; k++) {
+                var lineBreak = document.createElement('br');
+                containers.appendChild(lineBreak);
+            }
         }
 
         function createContainer() {

@@ -45,7 +45,7 @@ type,airport_ID
 medium_airport,87
 ../Result/airport/1.smt2/refined/input1 2
 latitude,longitude,airport_ID,elevation_ft,iso_region
-39.18,-76.67,87,8000,US-CA
+39.18,-76.67,87,3040,US-CA
 ../Result/airport/5.smt2/primitive/input2 2
 type,airport_ID
 ,A
@@ -57,19 +57,19 @@ type,airport_ID
 medium_airport,78
 ../Result/airport/5.smt2/refined/input1 2
 latitude,longitude,airport_ID,elevation_ft,iso_region
-39.18,-76.67,87,8000,US-CA
+39.18,-76.67,87,3040,US-CA
 ../Result/airport/3.smt2/primitive/input1 2
 latitude,longitude,airport_ID,elevation_ft,iso_region
 ,,,0,
 ../Result/airport/3.smt2/refined/input1 2
 latitude,longitude,airport_ID,elevation_ft,iso_region
-39.18,-76.67,87,12,US-MD
+39.18,-76.67,87,0,US-MD
 ../Result/airport/2.smt2/primitive/input1 2
 latitude,longitude,airport_ID,elevation_ft,iso_region
 ,,,9000,AAAAA
 ../Result/airport/2.smt2/refined/input1 2
 latitude,longitude,airport_ID,elevation_ft,iso_region
-39.18,-76.67,87,8000,US-MD
+39.18,-76.67,87,3040,US-MD
 ../Result/airport/4.smt2/primitive/input2 2
 type,airport_ID
 closed,

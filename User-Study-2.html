@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User study 2: Input case Preference</title>
+  <style>
+    .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .box {
+        border: 3px solid #666;
+        background-color: #ddd;
+        border-radius: .5em;
+        padding: 1px;
+        /*cursor: move;*/
+        position: relative;
+        width: fit-content;
+    }
+
+    table {
+        border-collapse: collapse;
+        text-align: left;
+    }
+    table th,
+    table td {
+        /*font-weight: normal;
+        border: 1px solid white;
+        width: 300px;*/
+        height: 25px;
+        border-right: 10px solid #ddd;
+    }
+
+  </style>
+</head>
+
+<body>
+<div id="Download" class="box">
+    Click here to store results.
+</div>
+<br>
+<br>
+<div id="containers">
+</div>
+</body>
+
+<script>
+
+    function loadFile(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                callback(xhr.responseText);
+            }
+        }
+        xhr.send();
+    }
+    var current_result = "";
+    loadFile('ground-truth.txt', function(response1) {
+        processData(response1);
+        current_result = "";
+        UI_tool();
+    });
+
+    function processData(csvData) {
+        var lines = csvData.split('\n');
+        var containers = document.getElementById('containers');
+        var tables = {};
+        for (var i = 0; i < lines.length; i++) {
+            console.log(lines[i]);
+            var infos = lines[i].split(" ");
+            var table_path = infos[0];
+            var table_rows = parseInt(infos[1]);
+            // console.log(table_path, table_rows);
+
+            // var info = createInfo(table_path + " " + table_rows);
+            // containers.appendChild(info)
+            var table = document.createElement("table");
+            var is_header = true;
+            for (var k = 0; k < table_rows; k++) {
+                i = i + 1;
+                var tr = document.createElement("tr");
+                table.appendChild(tr);
+
+                console.log(lines[i]);
+                var values = lines[i].split(',');
+
+                for (var j = 0; j < values.length; j++) {
+                    var item = document.createElement(is_header ? "th" : "td");
+                    item.textContent = values[j];
+                    tr.appendChild(item);
+                }
+                is_header = false;
+            }
+
+            var box = createBox(table_path);
+            box.append(table);
+
+            // var lineBreak = document.createElement('br');
+            // containers.appendChild(lineBreak);
+            var _anonymous = table_path.replace("primitive", "").replace("refined", "");
+            if (_anonymous in tables) tables[_anonymous].push(box);
+            else tables[_anonymous] = [box];
+        }
+
+        for (var key in tables) {
+            var container = createContainer();
+            containers.appendChild(container);
+            for (var table of tables[key])
+                container.appendChild(table);
+            var lineBreak = document.createElement('br');
+            containers.appendChild(lineBreak);
+        }
+
+        function createBox(table_path) {
+            var box = document.createElement('div');
+            box.className = 'box';
+            box.setAttribute('active', 'true');
+            box.setAttribute('table_path', table_path);
+            return box;
+        }
+        function createContainer() {
+            var container = document.createElement('div');
+            container.className = 'container';
+            return container;
+        }
+    }
+
+function UI_tool() {
+    function getResult() {
+        var containers = document.getElementById('containers');
+        var better_primitive = 0;
+        var better_refined = 0;
+        for (var container of containers.children)
+        if (container.className == "container") {
+            for (var box of container.children)
+            if (box.getAttribute("active") === "true") {
+                if (box.getAttribute("table_path").includes("primitive"))
+                    better_primitive += 1;
+                else
+                    better_refined += 1;
+            }
+        }
+
+        current_result = "";
+        for (var container of containers.children)
+        if (container.className == "container") {
+            for (var box of container.children)
+                current_result += box.getAttribute("table_path") + " " + box.getAttribute("active") + "\n"
+        }
+        console.log("primitive:", better_primitive, "refined:", better_refined);
+    }
+    function handleClick(e) {
+        e.preventDefault();
+        
+        var isactive = JSON.parse(this.getAttribute("active"))
+        if (isactive) {
+            this.setAttribute("active", false);
+            this.style.opacity = "0.4";
+        }
+        else {
+            this.setAttribute("active", true);
+            this.style.opacity = "1";
+            items.forEach(function (item) {
+                item.classList.remove('over');
+            });
+        }
+        getResult();
+        return false;
+    }
+
+    var items = document.getElementById('containers').querySelectorAll('.container .box');
+    items.forEach(function(item) {
+        item.addEventListener('click', handleClick);
+        item.click();
+    });
+    getResult();
+
+
+    // button used to download
+    document.getElementById('Download').addEventListener('click', function(event) {
+        // console.log(event)
+        event.stopPropagation();
+        var str = current_result;
+        var blob = new Blob([str], {type: "text/plain;charset=utf-8"});
+        var url = URL.createObjectURL(blob);
+
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "result2-username.txt";
+        document.body.appendChild(a); // 需要将元素添加到DOM中才能正常工作
+        a.click();
+        document.body.removeChild(a); // 下载后删除元素
+    });
+}
+</script>
+</html>

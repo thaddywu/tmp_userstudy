@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User study 1: Column meaning identification</title>
+    <style>
+    .container {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+    }
+
+    .box {
+        border: 3px solid #666;
+        background-color: #ddd;
+        border-radius: .5em;
+        padding: 10px;
+        cursor: move;
+        height: 20px;
+    }
+    .box.over {
+        border: 3px dotted #666;
+    }
+    </style>
+</head>
+
+<body>
+
+<div id="Download" class="box">
+    Click here to store results.
+</div>
+<br>
+<br>
+<br>
+<!--
+<div class="container">
+    <div draggable="true" class="box">A</div>
+    <div draggable="true" class="box">B</div>
+    <div draggable="true" class="box">C</div>
+</div>
+<div class="container">
+    <div draggable="true" class="box">a</div>
+    <div draggable="true" class="box">B</div>
+    <div draggable="true" class="box">C</div>
+</div>
+-->
+<div id="containers">
+</div>
+
+<script>
+    var ground_truth = "";
+    var current_result = "";
+    function loadFile(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                callback(xhr.responseText);
+            }
+        }
+        xhr.send();
+    }
+    loadFile('reordered_inputs.txt', function(response1) {
+        loadFile('shuffled_inputs.txt', function(response2) {
+            ground_truth = response1;
+            current_result = response2;
+            processData(current_result);
+            UI_tool();
+        });
+    });
+
+    function processData(csvData) {
+        var lines = csvData.split('\n');
+        var containers = document.getElementById('containers');
+
+        for (var i = 0; i < lines.length; i++) {
+            var infos = lines[i].split(" ");
+            var table_path = infos[0];
+            var table_rows = parseInt(infos[1]);
+            // console.log(table_path, table_rows);
+
+            var draggable = true;
+            var info = createInfo(table_path + " " + table_rows);
+            containers.appendChild(info);
+
+            for (var k = 0; k < table_rows; k++) {
+                i = i + 1;
+                var values = lines[i].split(',');
+                var container = createContainer();
+
+                for (var j = 0; j < values.length; j++) {
+                    var box = createBox(values[j], draggable, table_path);
+                    container.appendChild(box);
+                }
+                draggable = false;
+            }
+
+            var lineBreak = document.createElement('br');
+            containers.appendChild(lineBreak);
+        }
+
+        function createContainer() {
+            var container = document.createElement('div');
+            container.className = 'container';
+            containers.appendChild(container);
+            return container;
+        }
+        
+        function createInfo(infos) {
+            var info = document.createElement('div');
+            info.textContent = infos;
+            info.hidden = true;
+            info.className = 'info';
+            return info;
+        }
+
+        function createBox(text, draggable, belongsTo) {
+            var box = document.createElement('div');
+            box.className = 'box';
+            box.draggable = draggable;
+            box.textContent = text;
+            box.setAttribute("belongsTo", belongsTo);
+            box.setAttribute("active", draggable); // only headers are draggable, and they're active
+            return box;
+        }
+    }
+
+    // UI
+function UI_tool() {
+    function handleClick(e) {
+        e.preventDefault();
+        
+        if (this.draggable) { // draggable => this is header
+            var isactive = JSON.parse(this.getAttribute("active"))
+            if (isactive) {
+                this.setAttribute("active", false);
+                this.style.opacity = "0.2";
+            }
+            else {
+                this.setAttribute("active", true);
+                this.style.opacity = "1";
+                items.forEach(function (item) {
+                    item.classList.remove('over');
+                });
+            }
+        }
+        getResult();
+        return false;
+    }
+    function handleDragStart(e) {
+        // this.style.opacity = '0.4';
+    }
+
+    function handleDragEnd(e) {
+        // this.style.opacity = '1';
+
+        items.forEach(function (item) {
+            item.classList.remove('over');
+        });
+    }
+
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+
+        return false;
+    }
+
+    function handleDragEnter(e) {
+        this.classList.add('over');
+    }
+
+    function handleDragLeave(e) {
+        this.classList.remove('over');
+    }
+
+    function handleDrop(e) {
+        e.stopPropagation(); // stops the browser from redirecting.
+        if (dragSrcEl !== this && this.draggable && this.getAttribute('belongsTo') === dragSrcEl.getAttribute('belongsTo')) {
+            dragSrcEl.innerHTML = this.innerHTML;
+            this.innerHTML = e.dataTransfer.getData('text/html');
+            var this_active = this.getAttribute("active");
+            var dragSrcEl_active = dragSrcEl.getAttribute("active");
+
+            if (this_active !== dragSrcEl_active) {
+                this.click();
+                dragSrcEl.click();
+            }
+            getResult();
+        }
+
+        return false;
+    }
+
+    function handleDragStart(e) {
+        // this.style.opacity = '0.4';
+
+        dragSrcEl = this;
+
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.innerHTML);
+    }
+
+    function getResult() {
+        var containers = document.getElementById('containers');
+        result = "";
+        for (var i = 0; i < containers.children.length; i++)
+        if (containers.children[i].className === "info") {
+            result += containers.children[i].innerText + "\n";
+        }
+        else if (containers.children[i].className === "container") {
+            var container = containers.children[i];
+            var first_comp = true;
+            for (var j = 0; j < container.children.length; j++) {
+                if (!first_comp) result += ",";
+                box = container.children[j];
+                if (box.draggable && box.getAttribute("active") === "false")
+                    result += container.children[j].innerText + "[inactive]";
+                else
+                    result += container.children[j].innerText;
+                first_comp = false;
+            }
+            result += "\n";
+        }
+        // console.log(result);
+
+        function parse(raw_str) {
+            let i = 0;
+            let result = {};
+
+            lines = raw_str.split("\n")
+            while (i < lines.length) {
+                let [tablePath, tableRows] = lines[i].split(" ");
+                tableRows = parseInt(tableRows, 10);
+
+                i += 1;
+                let header = lines[i];
+                result[tablePath] = header;
+                i += tableRows;
+            }
+            return result;
+        }
+        function compare(ref, can) {
+            let result = {};
+            for (let k in ref) {
+                let v = ref[k].split(",");
+                let v2 = can[k].split(",");
+                if (v.length !== v2.length) {
+                    throw "AssertionError: length of v is not equal to length of v2";
+                }
+                result[k] = v.map((x, i) => x === v2[i] ? 1 : 0).reduce((a, b) => a + b, 0);
+            }
+
+            let primitive = 0;
+            let refined = 0;
+            for (let k in result) {
+                if (k.includes("primitive")) primitive += result[k];
+                if (k.includes("refined")) refined += result[k];
+            }
+            console.log("#primitive:", primitive, "#refined:", refined);
+        }
+        current_result = result;
+        compare(parse(ground_truth), parse(current_result));
+    }
+
+    // button used to download
+    document.getElementById('Download').addEventListener('click', function(event) {
+        // console.log(event)
+        event.stopPropagation();
+        var str = current_result;
+        var blob = new Blob([str], {type: "text/plain;charset=utf-8"});
+        var url = URL.createObjectURL(blob);
+
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "result1-username.txt";
+        document.body.appendChild(a); // 需要将元素添加到DOM中才能正常工作
+        a.click();
+        document.body.removeChild(a); // 下载后删除元素
+    });
+    
+    var items = document.getElementById('containers').querySelectorAll('.container .box');
+    items.forEach(function(item) {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('dragenter', handleDragEnter);
+        item.addEventListener('dragleave', handleDragLeave);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('drop', handleDrop);
+        item.addEventListener('click', handleClick);
+    });
+    getResult();
+}
+</script>
+</body>
+</html>

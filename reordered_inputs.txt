@@ -1,0 +1,186 @@
+../Result/usedcars/1.smt2/primitive/input2 2
+discount_price,miles,vehicle_id,year,price,sold-date
+0,0,,0,9000,0009
+../Result/usedcars/1.smt2/primitive/input1 2
+model,vehicle_id
+,
+../Result/usedcars/1.smt2/refined/input2 2
+discount_price,miles,vehicle_id,year,price,sold-date
+16115,70317,2413575,2020,28842,2022-08-10
+../Result/usedcars/1.smt2/refined/input1 2
+model,vehicle_id
+Wrangler,2413575
+../Result/usedcars/3.smt2/primitive/input2 2
+discount_price,miles,vehicle_id,year,price,sold-date
+9,,,9,9000,9999
+../Result/usedcars/3.smt2/refined/input2 2
+discount_price,miles,vehicle_id,year,price,sold-date
+16115,70317,2413575,2009,28842,2022-08-10
+../Result/usedcars/2.smt2/primitive/input2 2
+discount_price,miles,vehicle_id,year,price,sold-date
+0,,,,0,
+../Result/usedcars/2.smt2/refined/input2 2
+discount_price,miles,vehicle_id,year,price,sold-date
+16115,70317,2413575,2020,16115,2022-08-10
+../Result/usedcars/4.smt2/primitive/input2 2
+discount_price,miles,vehicle_id,year,price,sold-date
+0,0,A,0,9000,0009
+../Result/usedcars/4.smt2/primitive/input1 2
+model,vehicle_id
+,
+../Result/usedcars/4.smt2/refined/input2 2
+discount_price,miles,vehicle_id,year,price,sold-date
+16115,70317,2305985,2020,28842,2022-08-10
+../Result/usedcars/4.smt2/refined/input1 2
+model,vehicle_id
+Wrangler,2413575
+../Result/airport/1.smt2/primitive/input2 2
+type,airport_ID
+,
+../Result/airport/1.smt2/primitive/input1 2
+latitude,longitude,airport_ID,elevation_ft,iso_region
+,,,9000,AAACA
+../Result/airport/1.smt2/refined/input2 2
+type,airport_ID
+medium_airport,87
+../Result/airport/1.smt2/refined/input1 2
+latitude,longitude,airport_ID,elevation_ft,iso_region
+39.18,-76.67,87,8000,US-CA
+../Result/airport/5.smt2/primitive/input2 2
+type,airport_ID
+,A
+../Result/airport/5.smt2/primitive/input1 2
+latitude,longitude,airport_ID,elevation_ft,iso_region
+,,,9000,AAACA
+../Result/airport/5.smt2/refined/input2 2
+type,airport_ID
+medium_airport,78
+../Result/airport/5.smt2/refined/input1 2
+latitude,longitude,airport_ID,elevation_ft,iso_region
+39.18,-76.67,87,8000,US-CA
+../Result/airport/3.smt2/primitive/input1 2
+latitude,longitude,airport_ID,elevation_ft,iso_region
+,,,0,
+../Result/airport/3.smt2/refined/input1 2
+latitude,longitude,airport_ID,elevation_ft,iso_region
+39.18,-76.67,87,12,US-MD
+../Result/airport/2.smt2/primitive/input1 2
+latitude,longitude,airport_ID,elevation_ft,iso_region
+,,,9000,AAAAA
+../Result/airport/2.smt2/refined/input1 2
+latitude,longitude,airport_ID,elevation_ft,iso_region
+39.18,-76.67,87,8000,US-MD
+../Result/airport/4.smt2/primitive/input2 2
+type,airport_ID
+closed,
+../Result/airport/4.smt2/refined/input2 2
+type,airport_ID
+closed,87
+../Result/movie1/1.smt2/primitive/input1 3
+MovieRating,MovieDuration,MovieName,MovieYear,MovieGenre
+9,,,1910,
+9,,,1910,
+../Result/movie1/1.smt2/refined/input1 3
+MovieRating,MovieDuration,MovieName,MovieYear,MovieGenre
+5,00:47,Fight Club,1907,Animation
+5,00:47,Fight Club,1907,Animation
+../Result/movie1/3.smt2/primitive/input1 2
+MovieRating,MovieDuration,MovieName,MovieYear,MovieGenre
+,,,0,
+../Result/movie1/3.smt2/refined/input1 2
+MovieRating,MovieDuration,MovieName,MovieYear,MovieGenre
+5,00:47,Fight Club,0,Animation
+../Result/movie1/2.smt2/primitive/input1 2
+MovieRating,MovieDuration,MovieName,MovieYear,MovieGenre
+,,,9000,
+../Result/movie1/2.smt2/refined/input1 2
+MovieRating,MovieDuration,MovieName,MovieYear,MovieGenre
+5,00:47,Fight Club,2006,Animation
+../Result/movie1/4.smt2/primitive/input1 2
+MovieRating,MovieDuration,MovieName,MovieYear,MovieGenre
+1,,,1910,
+../Result/movie1/4.smt2/refined/input1 2
+MovieRating,MovieDuration,MovieName,MovieYear,MovieGenre
+0,00:47,Fight Club,1907,Animation
+../Result/transit/6.smt2/primitive/input1 2
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+00B90,,,,00A00
+../Result/transit/6.smt2/refined/input1 2
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+22:12,HOU,P020,2021-09-20,20:52
+../Result/transit/1.smt2/primitive/input1 3
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+00D22,,,,22C99
+00A22,,,,22B99
+../Result/transit/1.smt2/refined/input1 3
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+20:52,HOU,P020,2021-09-20,44A09
+20:52,HOU,P020,2021-09-20,44B09
+../Result/transit/5.smt2/primitive/input1 2
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+00B00,,,,09A00
+../Result/transit/5.smt2/refined/input1 2
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+18:40,HOU,P020,2021-09-20,20:52
+../Result/transit/3.smt2/primitive/input1 3
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+00B00,,,,22C90
+22D00,,,,22A00
+../Result/transit/3.smt2/refined/input1 3
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+00:29,HOU,P020,2021-09-20,23A92
+23:07,HOU,P020,2021-09-20,23:07
+../Result/transit/2.smt2/primitive/input1 3
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+22C99,,,,22B99
+00A22,,,,22D99
+../Result/transit/2.smt2/refined/input1 3
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+23:07,HOU,P020,2021-09-20,23:07
+00:29,HOU,P020,2021-09-20,23A92
+../Result/transit/4.smt2/primitive/input1 3
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+00D00,,,,00C00
+00A00,,,,00B00
+../Result/transit/4.smt2/refined/input1 3
+DepartureTime,Airport,PassengerID,TransitDate,ArriveTime
+20:52,HOU,P020,2021-09-20,20:52
+20:52,HOU,P020,2021-09-20,20:52
+../Result/credit/1.smt2/primitive/input1 3
+purpose,job_type,duration_months,credit_amount
+new car,,,9
+new car,,,9000
+../Result/credit/1.smt2/refined/input1 3
+purpose,job_type,duration_months,credit_amount
+new car,unskilled resident,45,861
+new car,unskilled resident,45,4154
+../Result/credit/5.smt2/primitive/input1 3
+purpose,job_type,duration_months,credit_amount
+new car,,,9
+new car,,,0
+../Result/credit/5.smt2/refined/input1 3
+purpose,job_type,duration_months,credit_amount
+new car,unskilled resident,45,861
+new car,unskilled resident,45,514
+../Result/credit/3.smt2/primitive/input1 2
+purpose,job_type,duration_months,credit_amount
+,,,
+../Result/credit/3.smt2/refined/input1 2
+purpose,job_type,duration_months,credit_amount
+retraining,unskilled resident,45,861
+../Result/credit/2.smt2/primitive/input1 3
+purpose,job_type,duration_months,credit_amount
+new car,,,9000
+new car,,,0
+../Result/credit/2.smt2/refined/input1 3
+purpose,job_type,duration_months,credit_amount
+new car,unskilled resident,45,4154
+new car,unskilled resident,45,861
+../Result/credit/4.smt2/primitive/input1 3
+purpose,job_type,duration_months,credit_amount
+new car,,,0
+new car,,,0
+../Result/credit/4.smt2/refined/input1 3
+purpose,job_type,duration_months,credit_amount
+new car,unskilled resident,45,861
+new car,unskilled resident,45,861
